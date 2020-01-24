@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/karthikbadarinath/assessment.svg?branch=master)](https://travis-ci.org/karthikbadarinath/assessment)
+
 # Challenge
 
 Write a program that prints all the numbers from 1 to 100. However, for
@@ -18,7 +20,7 @@ operators or `else`.
 Create a repository on GitLab, GitHub or any other similar service and
 just send us the link.
 
-## Environment
+# Environment
 
 ### Installation
 

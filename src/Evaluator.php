@@ -1,12 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Assessment;
 
 abstract class Evaluator
 {
-
     public const FOR_BOTH   = 15;
     public const WITH_FIVE  = 5;
     public const WITH_THREE = 3;
+
+    public const OUTPUT_FOR_BOTH = 'Linianos';
+    public const OUTPUT_FOR_FIVE = 'IT';
+    public const OUTPUT_FOR_THREE = 'Linio';
 
     public const ASSESS_NUMBERS = [
         self::FOR_BOTH,
@@ -14,19 +20,10 @@ abstract class Evaluator
         self::WITH_THREE,
     ];
 
-    /**
-     * This method assess the given number with the numbers to evaluate.
-     *
-     * @param int $number The given number.
-     *
-     * @return integer|null
-     */
-    protected function evaluate(int $number): int
+    protected function _evaluate(int $number): int
     {
-        $firstDivisibleNumber = current(array_filter(self::ASSESS_NUMBERS, function ($divisor) use ($number) {
-            return ($number % $divisor == 0);
-        }));
-
+        $allDivisibleValues = array_filter(self::ASSESS_NUMBERS, fn ($divisor) => ($number % $divisor == 0));
+        $firstDivisibleNumber = current($allDivisibleValues);
         if (!empty($firstDivisibleNumber)) {
             $number = $firstDivisibleNumber;
         }
@@ -35,24 +32,20 @@ abstract class Evaluator
     }
 
     /**
-     * Determines output result.
-     *
-     * @param integer $number The number which needs to be converted to string
-     *
-     * @return string|number
+     * @return string|int
      */
-    protected function getResult(int $number)
+    protected function _getResult(int $number)
     {
         $output = null;
         switch ($number) {
             case self::FOR_BOTH:
-                $output = 'Linianos';
+                $output = self::OUTPUT_FOR_BOTH;
                 break;
             case self::WITH_FIVE:
-                $output = 'IT';
+                $output = self::OUTPUT_FOR_FIVE;
                 break;
             case self::WITH_THREE:
-                $output = 'Linio';
+                $output = self::OUTPUT_FOR_THREE;
                 break;
             default:
                 $output = $number;
@@ -61,6 +54,4 @@ abstract class Evaluator
 
         return $output;
     }
-
 }
-

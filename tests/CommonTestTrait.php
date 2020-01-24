@@ -1,57 +1,60 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Assessment\Test;
+
+use Assessment\Evaluator;
 
 trait CommonTestTrait
 {
     /**
-     * Test Result Count
-     *
-     * @param integer $endNumber The end number in a range
-     *
-     * @covers \Assessment\SolutionOne::get,\Assessment\SolutionOne::set,\Assessment\SolutionOne::go
      * @dataProvider providerTestResultCount
-     *
-     * @return void
      */
-    public function testResultCount(int $endNumber)
+    public function testResultCount(int $endNumber): void
     {
         $numbers = range(1, $endNumber);
-        $result  = $this->performAction($numbers);
+        $result  = $this->performActionWith($numbers);
 
-        // Checking if the count matches
         $this->assertEquals($endNumber, $result->count());
-
-        // Checking if the result array matches count
         $this->assertCount($endNumber, $result->toArray());
     }
 
-    /**
-     * Provider for testResultCount
-     *
-     * @return array
-     */
-    public function providerTestResultCount()
+    public function providerTestResultCount(): array
     {
-        // Key is the desc. of the test that we are conducting, value is the params that we are passing to the calling test
-
         return [
-            'Check if range of number 1-10 returns 10 results as output' => [10], // 10 is the endNumber in range
-            'Check if range of number 1-65 returns 65 results as output' => [65], // 65 is the endNumber in range
+            'Check if range of number 1-10 returns 10 results as output' => ['endNumber' => 10],
+            'Check if range of number 1-65 returns 65 results as output' => ['endNumber' => 65],
         ];
     }
 
-    /**
-     * Tests the actual result data
-     *
-     * @return void
-     */
-    public function testResult()
+    public function testResult(): void
     {
         $numbers  = range(1, 20);
-        $expected = [1, 2, 'Linio', 4, 'IT', 'Linio', 7, 8, 'Linio', 'IT', 11, 'Linio', 13, 14, 'Linianos', 16, 17, 'Linio', 19, 'IT'];
-        $actual   = $this->performAction($numbers)->toArray();
+        $expected = [
+            1, 
+            2, 
+            Evaluator::OUTPUT_FOR_THREE, 
+            4, 
+            Evaluator::OUTPUT_FOR_FIVE,
+            Evaluator::OUTPUT_FOR_THREE, 
+            7, 
+            8, 
+            Evaluator::OUTPUT_FOR_THREE, 
+            Evaluator::OUTPUT_FOR_FIVE, 
+            11, 
+            Evaluator::OUTPUT_FOR_THREE, 
+            13, 
+            14, 
+            Evaluator::OUTPUT_FOR_BOTH,
+            16, 
+            17, 
+            Evaluator::OUTPUT_FOR_THREE, 
+            19, 
+            Evaluator::OUTPUT_FOR_FIVE
+        ];
 
+        $actual = $this->performActionWith($numbers)->toArray();
         $this->assertEquals($expected, $actual);
     }
-
 }

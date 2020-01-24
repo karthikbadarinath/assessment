@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 require_once 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use Assessment\SolutionOne;
 use Assessment\SolutionTwo;
 
-// Numbers in range
 $numbers = range(1, 100);
 
 // Solution 1, the standard PHP way
@@ -31,14 +32,7 @@ pr(SolutionTwo::get($numbers)->set()->go()->toJson());
 // pr(SolutionTwo::get($numbers)->set()->go()->toArray());
 // pr(SolutionTwo::get($numbers)->set()->go()->count());
 
-/**
- * Shortcut that includes <pre> tag for legibility.
- *
- * @param string|array $data The data to print
- *
- * @return void
- */
-function pr($data)
+function pr(array $data): void
 {
 	echo '<pre>';
 	print_r($data);
